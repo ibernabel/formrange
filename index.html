@@ -33,33 +33,51 @@
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="card-header cabecera p-3">
-            <h1 class="card-title text-white text-center ">¡Calcula tu pr&eacute;stamo aqu&iacute;!</h1>
-
-        </div>
-        <div class="card-body m-4">
-            <div>
-                <p><strong>Quiero pagar:</strong></p>
-
-                <!-- checkboxes -->
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="formCheckMensual" type="radio" name="frecuenciaPago" value="Mensual">
-                    <label for="formCheckMensual" class="form-check-label">Mensual</label>
-                </div>
-                <div class="form-check form-check-inline mb-4">
-                    <input class="form-check-input" id="formCheckQuincenal" type="radio" name="frecuenciaPago" value="Quincenal" checked>
-                    <label for="formCheckQuincenal" class="form-check-label">Quincenal</label>
-                </div>
-                <div class="card-text mt-4">
-
-                   <!-- noUiSlider -->
-                    <div class="" id="slider-round"></div>
-                     
-                    <div class="calculo-resultado" id="calculo-resultado"></div>
-                </div>
+    <div class="container">
+        <div class="card overflow-hidden mt-4">
+            <div class="card-header cabecera p-3">
+                <h1 class="card-title text-white text-center ">¡Calcula tu pr&eacute;stamo aqu&iacute;!</h1>
             </div>
-            
+            <div class="card-body m-4">
+                <div class="card-subtitle mb-4">
+                    <p><strong>Quiero pagar:</strong></p>
+                </div>
+                    <!-- checkboxes -->
+                    <div class="form-group">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="formCheckMensual" type="radio" name="frecuenciaPago" value="Mensual">
+                            <label for="formCheckMensual" class="form-check-label">Mensual</label>
+                        </div>
+                        <div class="form-check form-check-inline mb-5">
+                            <input class="form-check-input" id="formCheckQuincenal" type="radio" name="frecuenciaPago" value="Quincenal" checked>
+                            <label for="formCheckQuincenal" class="form-check-label">Quincenal</label>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <!-- noUiSlider -->
+                        <!-- Monto -->
+                    <div class="form-group mt-4">
+                        <div class="slider-round" id="slider-round-1"></div>
+
+                        <div class="card-text d-flex justify-content-between mt-3 mb-4">
+                            <p class="">$3,000.00</p>
+                            <p class="">$15,000.00</p>
+                        </div>
+                    </div>
+                        <!--  -->
+                        <!-- Plazo -->
+                    <div class="form-group mt-4">
+                        <div class="slider-round" id="slider-round-2"></div>
+
+                        <div class="card-text d-flex justify-content-between mt-3">
+                            <p class="">1 Mes</p>
+                            <p class="">12 Meses</p>
+                        </div>
+                    </div>
+                        <!--  -->
+                    
+                    <div class="calculo-resultado" id="calculo-resultado"></div>
+            </div>
         </div>
     </div>
 
@@ -68,9 +86,10 @@
         window.onload = function() {
 
             // Scripts de los Sliders
-            const slider = document.getElementById('slider-round');
+            const slider1 = document.getElementById('slider-round-1');
+            const slider2 = document.getElementById('slider-round-2');
             
-            noUiSlider.create(slider, {
+            noUiSlider.create(slider1, {
                 start: [5000],
                 range: {
                     'min': 1000,
@@ -79,13 +98,32 @@
                 step: 1000,
                 padding: [2000, 0],
                 connect: 'lower',
-                // tooltips: true,
-                // tooltips: wNumb ({decimals: 1}),
                 tooltips: wNumb({
                     mark: '.',
                     thousand: ',',
                     decimals: 2,
                     prefix: 'RD$'
+                })
+
+            });
+            noUiSlider.create(slider2, {
+                range: {
+                    'min': 1,
+                    'max': 12
+                },
+                start: [6],
+                step: 1,
+                // padding: [2000, 0],
+                connect: 'lower',
+                tooltips: wNumb({
+                    mark: '.',
+                    thousand: ',',
+                    decimals: 0,
+                    suffix: ' Meses',
+                    // prefix: 'RD$'
+                    // encoder: function(value){
+                    //     return value * 1;
+                    // }
                 })
 
             });
