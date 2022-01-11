@@ -76,8 +76,12 @@
                         <!--  -->
                     
                     <div class="card-text d-flex justify-content-between mt-3" id="calculoResultado">
-                        <p id="pagoFrecuencia">Pago Mesual</p>
-                        <p id="pagoCuota">$3,500.00</p>
+                        <p id="pagoFrecuencia">Pago Quincenal</p>
+                        <p id="pagoCuota">RD$1,190.00</p>
+                    </div>
+                    <div class="card-text d-flex justify-content-between mt-3" id="">
+                        <p id="frecuenciaParaPagar">Quincenas para pagar</p>
+                        <p id="plazoParaPagar">12 Quincenas</p>
                     </div>
             </div>
         </div>
@@ -91,13 +95,32 @@
             const slider1 = document.getElementById('slider-round-1');
             const slider2 = document.getElementById('slider-round-2');
 
-            const calculoResultado = document.getElementById('calculoResultado');
+            // const calculoResultado = document.getElementById('calculoResultado');
+            const frecuenciaParaPagar = document.getElementById('frecuenciaParaPagar');
+            const plazoParaPagar = document.getElementById('plazoParaPagar');
             const pagoFrecuencia = document.getElementById('pagoFrecuencia');
             const pagoCuota = document.getElementById('pagoCuota');
+            const checkMensual = document.getElementById('formCheckMensual');
+            const checkQuincenal = document.getElementById('formCheckQuincenal');
+            const gastosDeCierre = 500;
+            const tasaMensual = 0.06;
+            const tasaQuincenal = 0.03;
 
+            const currency = function(number){return new Intl.NumberFormat('es-DO', {style: 'currency',currency: 'DOP', minimumFractionDigits: 2}).format(number)}; // Funcion que sirve para dar formato de moneda local
+
+            let prestamo;
+            let interes;
+            let monto;
+            let plazo;
+            let tasa;
+            let frecuencia;
+            let frecuenciaLiteral;
+            let capitalCuota;
+            let montoCuota;
+            
             // Slider 1
             noUiSlider.create(slider1, {
-                start: [5000],
+                start: [10000],
                 range: {
                     'min': 1000,
                     'max': 15000
@@ -119,7 +142,7 @@
                     'min': 1,
                     'max': 12
                 },
-                start: [6],
+                start: [12],
                 step: 1,
                 connect: 'lower',
                 tooltips: wNumb({
@@ -133,35 +156,48 @@
                value = slider2.noUiSlider.get();
                if (value == 1){
                     slider2.noUiSlider.updateOptions({
-                        tooltips: wNumb({
-                                    decimals: 0,
-                                    suffix: ' Mes',
-                                    })
+                        tooltips: wNumb({decimals: 0, suffix: ' Mes'})
                         });
                 } else {
                     slider2.noUiSlider.updateOptions({
-                        tooltips: wNumb({
-                                    decimals: 0,
-                                    suffix: ' Meses',
-                                    })
+                        tooltips: wNumb({decimals: 0, suffix: ' Meses'})
                     });
                 }
             });  
 
-            slider1.noUiSlider.on('change.one', function () {
-               valueMonto = slider1.noUiSlider.get();
-                valueMonto = parseInt(valueMonto);
-                    // console.log(valueMonto);   
-               valuePlazo = slider2.noUiSlider.get();
-                valuePlazo = parseInt(valuePlazo);
-                    // console.log(valuePlazo);   
+            slider1.noUiSlider.on('change.one', calcularCuota);
+            slider2.noUiSlider.on('change.one', calcularCuota);
+            checkMensual.addEventListener('change', calcularCuota);
+            checkQuincenal.addEventListener('change', calcularCuota);
+            
+            function calcularCuota() {
+                monto = parseInt(slider1.noUiSlider.get());
+                    // console.log(monto);   
+                plazo = parseInt(slider2.noUiSlider.get());
+                    // console.log(plazo);  
+                prestamo =  monto + gastosDeCierre;
+                    // console.log(prestamo);
+                tasa = (checkMensual.checked ? tasaMensual : tasaQuincenal); 
+                frecuencia = (checkMensual.checked ? "Mensual" : "Quincenal");
+                frecuenciaLiteral = (checkMensual.checked ? "Menses" : "Quincenas");
+                        // console.log(tasa);   
+                capitalCuota = prestamo / plazo;
+                    // console.log(capitalCuota);   
+                interes = prestamo * tasa;
+                    // console.log(interes);   
 
-               montoCuota = (valueMonto + 500) ;
-               montoCuota = parseFloat(montoCuota, 2) ;
+                montoCuota = capitalCuota + interes;
+                montoCuota = montoCuota.toFixed(2);
                     console.log(montoCuota);   
 
-               pagoCuota.innerHTML = "RD$ " + montoCuota;
-            });  
+                pagoFrecuencia.innerHTML = "Pago " + frecuencia;
+                pagoCuota.innerHTML = currency(montoCuota);
+                frecuenciaParaPagar.innerHTML = frecuenciaLiteral + " para pagar";
+                plazoParaPagar.innerHTML = plazo + " " + frecuenciaLiteral;
+
+                // console.log(currency(montoCuota));
+                // 
+            }  
                      
         }
     </script>
