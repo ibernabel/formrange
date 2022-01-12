@@ -6,6 +6,8 @@ html{
 .cabecera {
     background-color: #004AA1 !important;
     padding: 2rem;
+    box-shadow: 0px 3px 5px 0px rgba(135,135,135,0.5);
+
 }
 .header h1 {
     color: white;
@@ -48,14 +50,18 @@ html{
     border-color: rgb(255, 255, 255);
     border-width: .25rem;
     border-radius: .75rem;
+    box-shadow: 0px 2px 3px 0px rgba(135,135,135,0.5);
 }
 .slider-round .noUi-tooltip {
     /* top: -2rem; */
     /* bottom: initial; */
     margin-top: .25rem;
     margin-bottom: .25rem;
+    /* border: none; */
+    /* background-color: transparent; */
     border-radius: .5rem;
     border-color: rgba(0, 143, 213, .5) ;
+    box-shadow: 0px 3px 5px 0px rgba(135,135,135,0.5);
     /* opacity: 1;
     transition: opacity 1s; */
 
@@ -73,7 +79,7 @@ html{
     border-width: .375rem;
     border-style: solid;
     border-color: rgba(0, 143, 213, .8) transparent transparent transparent;
-  }
+}
 
 .slider-round .noUi-handle-lower::before {
     display: none!important;

@@ -33,7 +33,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="card overflow-hidden mt-4">
+        <div class="card overflow-visible mt-4">
             <div class="card-header cabecera p-3">
                 <h1 class="card-title text-white text-center ">¡Calcula tu pr&eacute;stamo aqu&iacute;!</h1>
             </div>
@@ -60,7 +60,7 @@
 
                         <div class="card-text d-flex justify-content-between mt-3 mb-4">
                             <p class="">$3,000.00</p>
-                            <p class="">$15,000.00</p>
+                            <p class="m-4">$15,000.00</p>
                         </div>
                     </div>
                         <!--  -->
@@ -70,16 +70,16 @@
 
                         <div class="card-text d-flex justify-content-between mt-3">
                             <p class="">1 Mes</p>
-                            <p class="">12 Meses</p>
+                            <p class="mb-4">12 Meses</p>
                         </div>
                     </div>
                         <!--  -->
                     
-                    <div class="card-text d-flex justify-content-between mt-3" id="calculoResultado">
+                    <div class="card-text d-flex justify-content-between mt-3 fw-bold" id="calculoResultado">
                         <p id="pagoFrecuencia">Pago Quincenal</p>
                         <p id="pagoCuota">RD$1,190.00</p>
                     </div>
-                    <div class="card-text d-flex justify-content-between mt-3" id="">
+                    <div class="card-text d-flex justify-content-between mt-3 fw-bold" id="">
                         <p id="frecuenciaParaPagar">Quincenas para pagar</p>
                         <p id="plazoParaPagar">12 Quincenas</p>
                     </div>
@@ -179,7 +179,7 @@
                     // console.log(prestamo);
                 tasa = (checkMensual.checked ? tasaMensual : tasaQuincenal); 
                 frecuencia = (checkMensual.checked ? "Mensual" : "Quincenal");
-                frecuenciaLiteral = (checkMensual.checked ? "Menses" : "Quincenas");
+                frecuenciaLiteral = (checkMensual.checked ? "Meses" : "Quincenas");
                         // console.log(tasa);   
                 capitalCuota = prestamo / plazo;
                     // console.log(capitalCuota);   
