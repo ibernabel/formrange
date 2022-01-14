@@ -41,6 +41,8 @@
                 <div class="card-subtitle mb-4">
                     <p><strong>Quiero pagar:</strong></p>
                 </div>
+                <!-- form -->
+                <form action="" method="get">
                     <!-- checkboxes -->
                     <div class="form-group">
                         <div class="form-check form-check-inline">
@@ -83,6 +85,13 @@
                         <p id="frecuenciaParaPagar">Quincenas para pagar</p>
                         <p id="plazoParaPagar">12 Quincenas</p>
                     </div>
+                    <div class="card-footer">
+                        <div class="form-group">
+                            <input class="btn btn-primary w-100" type="button" value="¡Quiero este préstamo!">
+                        </div>
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
@@ -147,23 +156,24 @@
                 connect: 'lower',
                 tooltips: wNumb({
                     decimals: 0,
-                    suffix: ' Meses',
+                    suffix: ' Quincenas',
                 })
             });
          
             // Escuchar el evento 'change' para ver si el valor del slider2 es igual a 1 para cambiar el sufijo de plurar a singular y viceversa
-            slider2.noUiSlider.on('change.one', function () {
-               value = slider2.noUiSlider.get();
-               if (value == 1){
-                    slider2.noUiSlider.updateOptions({
-                        tooltips: wNumb({decimals: 0, suffix: ' Mes'})
-                        });
-                } else {
-                    slider2.noUiSlider.updateOptions({
-                        tooltips: wNumb({decimals: 0, suffix: ' Meses'})
-                    });
-                }
-            });  
+            // slider2.noUiSlider.on('change.one', actualizarTooltip);
+            
+            // function actualizarTooltip () {
+            //    value = slider2.noUiSlider.get();
+            //    if ( value == 1 ){ slider2.noUiSlider.updateOptions({
+            //             tooltips: wNumb({decimals: 0, suffix: ' Mes'})
+            //             });
+            //     } else {
+            //         slider2.noUiSlider.updateOptions({
+            //             tooltips: wNumb({decimals: 0, suffix: ' Meses'})
+            //         });
+            //     }
+            // }  
 
             slider1.noUiSlider.on('change.one', calcularCuota);
             slider2.noUiSlider.on('change.one', calcularCuota);
@@ -171,30 +181,39 @@
             checkQuincenal.addEventListener('change', calcularCuota);
             
             function calcularCuota() {
-                monto = parseInt(slider1.noUiSlider.get());
+                valuePlazo = slider2.noUiSlider.get();
+
+                monto = parseInt( slider1.noUiSlider.get());
                     // console.log(monto);   
-                plazo = parseInt(slider2.noUiSlider.get());
+                plazo = parseInt( slider2.noUiSlider.get());
                     // console.log(plazo);  
                 prestamo =  monto + gastosDeCierre;
                     // console.log(prestamo);
-                tasa = (checkMensual.checked ? tasaMensual : tasaQuincenal); 
+                tasa = ( checkMensual.checked ? tasaMensual : tasaQuincenal); 
                 frecuencia = (checkMensual.checked ? "Mensual" : "Quincenal");
-                frecuenciaLiteral = (checkMensual.checked ? "Meses" : "Quincenas");
+
+                plural = ( valuePlazo == 1 ) ?  "" : "";
+
+                // frecuenciaLiteral = (checkMensual.checked) ? "Meses" : "Quincenas";
+                frecuenciaLiteral = (checkMensual.checked) ? ( valuePlazo == 1 ) ?  " Mes" : " Meses" : ( valuePlazo == 1 ) ? " Quincena" : " Quincenas";
+
                         // console.log(tasa);   
                 capitalCuota = prestamo / plazo;
                     // console.log(capitalCuota);   
                 interes = prestamo * tasa;
                     // console.log(interes);   
-
                 montoCuota = capitalCuota + interes;
                 montoCuota = montoCuota.toFixed(2);
-                    console.log(montoCuota);   
+                    // console.log(montoCuota);   
 
                 pagoFrecuencia.innerHTML = "Pago " + frecuencia;
                 pagoCuota.innerHTML = currency(montoCuota);
                 frecuenciaParaPagar.innerHTML = frecuenciaLiteral + " para pagar";
                 plazoParaPagar.innerHTML = plazo + " " + frecuenciaLiteral;
 
+                slider2.noUiSlider.updateOptions({
+                        tooltips: wNumb({decimals: 0, suffix: frecuenciaLiteral})
+                        });
                 // console.log(currency(montoCuota));
                 // 
             }  
