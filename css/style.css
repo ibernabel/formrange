@@ -36,9 +36,12 @@ html{
 }
 .slider-round .noUi-touch-area {
     background: #008FD5;
-    border-radius: 12px;
+        border-radius: 12px;
+    }
+.slider-round .noUi-touch-area:hover {
+    background: #006192;
 }
-
+            
 .slider-round .noUi-handle {
     height: 1.5rem;
     width: 1.5rem;
@@ -47,10 +50,13 @@ html{
     /* right: -12px;  */
     /* right is the half of the width*/
     border: solid;
-    border-color: rgb(255, 255, 255);
+    border-color: #ffffff;
     border-width: .25rem;
     border-radius: .75rem;
     box-shadow: 0px 2px 3px 0px rgba(135,135,135,0.5);
+}
+.slider-round .noUi-handle:active {
+    transform: scale(.9);
 }
 .slider-round .noUi-tooltip {
     /* top: -2rem; */
